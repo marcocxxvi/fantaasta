@@ -1,0 +1,500 @@
+/* =========================================================
+   TOKEN DI DESIGN
+   Palette ispirata al campo e ai cartellini d'arbitro.
+   ========================================================= */
+:root {
+  --bg: #F3F5F0;
+  --surface: #FFFFFF;
+  --surface-alt: #EEF1EA;
+  --ink: #16211A;
+  --muted: #66756C;
+  --line: #DEE3DA;
+
+  --pitch: #14532D;      /* verde campo, header */
+  --pitch-dark: #0E3B20;
+
+  --cat-top: #1B7A3D;
+  --cat-top-bg: #E4F3E9;
+  --cat-semitop: #2F6FED;
+  --cat-semitop-bg: #E7EEFE;
+  --cat-colpo: #C97A0C;
+  --cat-colpo-bg: #FBEEDA;
+  --cat-evitare: #C4342F;
+  --cat-evitare-bg: #FBE7E6;
+
+  --purchased-bg: #E8E9E5;
+  --star: #E8A317;
+
+  --radius: 10px;
+  --shadow: 0 1px 2px rgba(20, 30, 22, 0.06), 0 1px 8px rgba(20, 30, 22, 0.04);
+
+  --font-display: 'Oswald', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'Roboto Mono', monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+.boot-loader {
+  padding: 40px;
+  text-align: center;
+  color: var(--muted);
+  font-family: var(--font-body);
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+input, select, textarea {
+  font-family: var(--font-body);
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+.app-header {
+  background: linear-gradient(180deg, var(--pitch) 0%, var(--pitch-dark) 100%);
+  color: #fff;
+  padding: 14px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+.app-header__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.app-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.app-title small {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 400;
+  text-transform: none;
+  font-size: 11px;
+  color: #C9E2CF;
+  letter-spacing: 0;
+}
+
+.user-badge {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.refresh-btn {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.refresh-btn:active { transform: scale(0.96); }
+
+.search-bar {
+  width: 100%;
+  border: none;
+  border-radius: 999px;
+  padding: 11px 16px;
+  font-size: 15px;
+  outline: none;
+  background: #fff;
+  color: var(--ink);
+}
+.search-bar::placeholder { color: var(--muted); }
+
+/* =========================================================
+   TABS RUOLI - badge numerati stile formazione
+   ========================================================= */
+.role-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px 0;
+  overflow-x: auto;
+}
+
+.role-tab {
+  flex: 1;
+  min-width: 84px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 6px 8px;
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.role-tab__num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--surface-alt);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.role-tab.active {
+  background: var(--pitch);
+  border-color: var(--pitch);
+  color: #fff;
+}
+.role-tab.active .role-tab__num {
+  background: #fff;
+  color: var(--pitch);
+}
+
+.role-tab__count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+/* =========================================================
+   CONTROLS: filtri categoria + ordinamento
+   ========================================================= */
+.controls-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding: 12px 16px;
+}
+
+.filter-chip {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.filter-chip.active {
+  color: #fff;
+  border-color: transparent;
+}
+.filter-chip[data-cat="Tutti"].active { background: var(--ink); }
+.filter-chip[data-cat="Top"].active { background: var(--cat-top); }
+.filter-chip[data-cat="Semi Top"].active { background: var(--cat-semitop); }
+.filter-chip[data-cat="Chicco Colpo"].active { background: var(--cat-colpo); }
+.filter-chip[data-cat="Evitare"].active { background: var(--cat-evitare); }
+
+.sort-select {
+  margin-left: auto;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.add-player-form {
+  display: flex;
+  gap: 8px;
+  padding: 0 16px 12px;
+}
+.add-player-form input {
+  flex: 1;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+.add-player-form button {
+  background: var(--pitch);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0 16px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* =========================================================
+   TABELLA GIOCATORI
+   ========================================================= */
+.table-wrap {
+  padding: 0 16px 32px;
+}
+
+.player-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--muted);
+  padding: 40px 16px;
+  font-size: 14px;
+}
+
+/* Ogni giocatore è una "card" con bordo sinistro colorato per categoria.
+   Su desktop si comporta come riga di tabella, su mobile come card impilata. */
+.player-row {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border-left: 5px solid var(--line);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  padding: 12px;
+}
+
+.player-row[data-cat="Top"] { border-left-color: var(--cat-top); }
+.player-row[data-cat="Semi Top"] { border-left-color: var(--cat-semitop); }
+.player-row[data-cat="Chicco Colpo"] { border-left-color: var(--cat-colpo); }
+.player-row[data-cat="Evitare"] { border-left-color: var(--cat-evitare); }
+
+.player-row.purchased {
+  background: var(--purchased-bg);
+  opacity: 0.75;
+}
+.player-row.purchased .player-name-input {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+
+.player-row__top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.star-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--line);
+  padding: 2px;
+  flex-shrink: 0;
+}
+.star-btn.active { color: var(--star); }
+
+.player-name-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15.5px;
+  color: var(--ink);
+  padding: 4px 2px;
+  min-width: 0;
+}
+.player-name-input:focus {
+  outline: none;
+  border-bottom: 1px solid var(--pitch);
+}
+
+.category-select {
+  border: none;
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+.category-select[data-cat="Top"] { background: var(--cat-top-bg); color: var(--cat-top); }
+.category-select[data-cat="Semi Top"] { background: var(--cat-semitop-bg); color: var(--cat-semitop); }
+.category-select[data-cat="Chicco Colpo"] { background: var(--cat-colpo-bg); color: var(--cat-colpo); }
+.category-select[data-cat="Evitare"] { background: var(--cat-evitare-bg); color: var(--cat-evitare); }
+.category-select[data-cat=""] { background: var(--surface-alt); color: var(--muted); }
+
+.player-row__mid {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.price-field {
+  display: flex;
+  align-items: center;
+  background: var(--surface-alt);
+  border-radius: 8px;
+  padding: 4px 8px;
+  gap: 4px;
+}
+.price-field label {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 700;
+}
+.price-field input {
+  width: 56px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink);
+}
+.price-field input:focus { outline: none; }
+
+.purchased-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.purchased-toggle input {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--pitch);
+}
+
+.delete-btn {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 13px;
+  padding: 4px 6px;
+}
+.delete-btn:hover { color: var(--cat-evitare); }
+
+.notes-textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 13.5px;
+  font-family: var(--font-body);
+  color: var(--ink);
+  resize: vertical;
+  min-height: 38px;
+  background: var(--surface-alt);
+}
+.notes-textarea:focus {
+  outline: none;
+  border-color: var(--pitch);
+  background: #fff;
+}
+
+.player-row__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+
+.role-pill {
+  font-family: var(--font-body);
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: var(--surface-alt);
+  color: var(--muted);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+/* =========================================================
+   DESKTOP: layout a colonne più tabellare
+   ========================================================= */
+@media (min-width: 860px) {
+  .app-header__top { gap: 20px; }
+  .app-title { font-size: 22px; }
+
+  .search-bar { max-width: 320px; }
+
+  .header-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .role-tabs { padding-left: 16px; }
+  .role-tab { flex: 0 0 120px; flex-direction: row; justify-content: center; padding: 10px 14px; }
+
+  .player-row {
+    grid-template-columns: 26px 2fr 120px 90px 110px 1.4fr 90px 140px 30px;
+    align-items: center;
+    padding: 10px 14px;
+  }
+  .player-row__top,
+  .player-row__mid,
+  .player-row__footer {
+    display: contents;
+  }
+
+  .notes-textarea { min-height: 34px; }
+
+  .table-header {
+    display: grid;
+    grid-template-columns: 26px 2fr 120px 90px 110px 1.4fr 90px 140px 30px;
+    padding: 0 14px 6px;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    font-weight: 700;
+  }
+}
+
+@media (max-width: 859px) {
+  .table-header { display: none; }
+}
